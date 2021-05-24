@@ -5,19 +5,22 @@
  */
 
 export type CoinUpdate = {
-  type: 'done' | 'received' | 'open',
-  side: string,
-  product_id: string,
-  time: string,
-  sequence: number,
-  order_id: string,
-  order_type: string,
-  size: string,
-  price: string,
-  client_oid: string,
+  type: 'done' | 'received' | 'open';
+  side: string;
+  product_id: string;
+  time: string;
+  sequence: number;
+  order_id: string;
+  order_type: string;
+  size: string;
+  price: string;
+  client_oid: string;
 };
 
-export function streamCoinbase(onMessage: (event: CoinUpdate) => void, product_ids = ['BTC-USD', 'BTC-GBP', 'BTC-EUR']) {
+export function streamCoinbase(
+  onMessage: (event: CoinUpdate) => void,
+  product_ids = ['BTC-USD', 'BTC-GBP', 'BTC-EUR'],
+) {
   const socket = new WebSocket('wss://ws-feed.pro.coinbase.com');
 
   const subPayload = {
@@ -31,11 +34,15 @@ export function streamCoinbase(onMessage: (event: CoinUpdate) => void, product_i
     socket.send(JSON.stringify(subPayload));
   });
 
-  socket.addEventListener('error', error => {
+  socket.addEventListener('error', (error) => {
     console.error('Socket error', error);
   });
 
-  socket.addEventListener('message', event => {
+  let counterNode: HTMLElement | null;
+  let last = performance.now();
+  let count = 0;
+
+  socket.addEventListener('message', (event) => {
     try {
       const msg = JSON.parse(event.data);
       if (msg.product_id && msg.price) {
@@ -43,6 +50,18 @@ export function streamCoinbase(onMessage: (event: CoinUpdate) => void, product_i
       }
     } catch (err) {
       console.error('Failed to parse message', event.data, err);
+    }
+
+    // show stats
+    if (!counterNode) {
+      counterNode = document.getElementById('counter');
+    }
+    if (counterNode) {
+      const n = performance.now();
+      counterNode.innerText = `${Math.round(
+        1000 / (n - last),
+      )} items/sec. ${++count} total`;
+      last = n;
     }
   });
 

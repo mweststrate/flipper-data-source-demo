@@ -8,11 +8,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-import {CBRaw} from './CBRaw';
-import {CBVirtual} from './CBVirtual';
-import {CBDataSource} from './CBDataSource';
-import { BasicChart } from './BasicChart';
-import { DataSourceChart } from './DataSourceChart';
+import {Coins} from './Coins';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,25 +21,9 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <h1>Raw HTML manipulation</h1>
-        <CBRaw />
+        <Coins />
       </div>
-      <div className="container">
-        <h1>Virtualization</h1>
-        <CBVirtual />
-      </div>
-      <div className="container">
-        <h1>DataSource</h1>
-        <CBDataSource />
-      </div>
-      <div className="container">
-        <h1>Chart</h1>
-        <BasicChart />
-      </div>
-      <div className="container">
-        <h1>DataSource powered Chart</h1>
-        <DataSourceChart />
-      </div>
+      <div className="counter" id="counter" />
     </div>
   );
 }
