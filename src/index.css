@@ -16,6 +16,10 @@ code {
     monospace;
 }
 
+.App {
+  margin-top: 200px;
+}
+
 .table {
   width: 500px;
   height: 500px;
@@ -52,8 +56,8 @@ code {
   align-items: center;
 }
 
-.counter { 
-  text-align: center;
+.counter {
+  text-align: right;
   color: #ccc;
   font-weight: bold;
   font-size: 0.8em;

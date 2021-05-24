@@ -10,6 +10,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -22,7 +23,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepare": "relative-deps",
     "serve": "yarn build && npx serve -s build"
   },
   "browserslist": {
@@ -39,8 +39,5 @@
   },
   "devDependencies": {
     "relative-deps": "^1.0.7"
-  },
-  "relativeDependencies": {
-    "flipper-data-source": "../../desktop/flipper-plugin/src/data-source"
   }
 }

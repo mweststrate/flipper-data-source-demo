@@ -22,8 +22,8 @@ function App() {
     <div className="App">
       <div className="container">
         <Coins />
+        <div className="counter" id="counter" />
       </div>
-      <div className="counter" id="counter" />
     </div>
   );
 }

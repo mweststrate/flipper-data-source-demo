@@ -4,7 +4,7 @@
  * @format
  */
 
-export type CoinUpdate = {
+type RawCoinUpdate = {
   type: 'done' | 'received' | 'open';
   side: string;
   product_id: string;
@@ -16,6 +16,16 @@ export type CoinUpdate = {
   price: string;
   client_oid: string;
 };
+
+export type CoinUpdate = {
+  product_id: string;
+  price: number;
+  data: string;
+};
+
+export const initialData: CoinUpdate[] = require('./data.json');
+
+let count = initialData.length;
 
 export function streamCoinbase(
   onMessage: (event: CoinUpdate) => void,
@@ -40,13 +50,16 @@ export function streamCoinbase(
 
   let counterNode: HTMLElement | null;
   let last = performance.now();
-  let count = 0;
 
   socket.addEventListener('message', (event) => {
     try {
-      const msg = JSON.parse(event.data);
+      const msg: RawCoinUpdate = JSON.parse(event.data);
       if (msg.product_id && msg.price) {
-        onMessage(msg);
+        onMessage({
+          product_id: msg.product_id,
+          price: parseFloat(msg.price),
+          data: event.data,
+        });
       }
     } catch (err) {
       console.error('Failed to parse message', event.data, err);
@@ -69,4 +82,8 @@ export function streamCoinbase(
     console.log('stop stream');
     socket.close();
   };
+}
+
+export function sortCoinsByPrice(a: CoinUpdate, b: CoinUpdate) {
+  return b.price - a.price;
 }
