@@ -4,6 +4,8 @@
  * @format
  */
 
+import {throttle} from 'lodash';
+
 type RawCoinUpdate = {
   type: 'done' | 'received' | 'open';
   side: string;
@@ -24,8 +26,6 @@ export type CoinUpdate = {
 };
 
 export const initialData: CoinUpdate[] = require('./data.json');
-
-let count = initialData.length;
 
 export function streamCoinbase(
   onMessage: (event: CoinUpdate) => void,
@@ -48,9 +48,6 @@ export function streamCoinbase(
     console.error('Socket error', error);
   });
 
-  let counterNode: HTMLElement | null;
-  let last = performance.now();
-
   socket.addEventListener('message', (event) => {
     try {
       const msg: RawCoinUpdate = JSON.parse(event.data);
@@ -66,21 +63,41 @@ export function streamCoinbase(
     }
 
     // show stats
-    if (!counterNode) {
-      counterNode = document.getElementById('counter');
-    }
-    if (counterNode) {
-      const n = performance.now();
-      counterNode.innerText = `${Math.round(
-        1000 / (n - last),
-      )} items/sec. ${++count} total`;
-      last = n;
+    {
+      ++count;
+      setCounterText();
     }
   });
 
   return () => {
     console.log('stop stream');
     socket.close();
+  };
+}
+
+let counterNode: HTMLElement | null;
+let count = initialData.length;
+let lastTime = performance.now();
+let lastCount = count;
+
+const setCounterText = throttle(() => {
+  if (!counterNode) {
+    counterNode = document.getElementById('counter');
+  }
+  const deltaCount = count - lastCount;
+  lastCount = count;
+  const deltaTime = performance.now() - lastTime;
+  lastTime = performance.now();
+  if (counterNode) {
+    counterNode.innerText = `${Math.round(
+      (1000 / deltaTime) * deltaCount,
+    )} items/sec. ${count} total`;
+  }
+}, 500);
+
+export function filterCoinsBy(search: string) {
+  return function filter(c: CoinUpdate) {
+    return JSON.parse(c.data).product_id.includes(search);
   };
 }
 

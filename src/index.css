@@ -26,6 +26,7 @@ code {
   overflow-y: auto;
   background: #f5f5f5;
   margin-top: 10px;
+  display: flex;
 }
 
 .row {
@@ -58,7 +59,7 @@ code {
 
 .counter {
   text-align: right;
-  color: #ccc;
+  color: cornflowerblue;
   font-weight: bold;
   font-size: 0.8em;
 }

@@ -4,9 +4,10 @@
  * @format
  */
 
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState, useLayoutEffect} from 'react';
 import {
   CoinUpdate,
+  filterCoinsBy,
   initialData,
   sortCoinsByPrice,
   streamCoinbase,
@@ -35,12 +36,12 @@ export function Coins() {
 
   // apply filter / sort
   let visibleRows = rows;
-  if (search) visibleRows = visibleRows.filter((r) => r.data.includes(search));
+  if (search) visibleRows = visibleRows.filter(filterCoinsBy(search));
   if (sorted) visibleRows = visibleRows.sort(sortCoinsByPrice);
 
   // sticky scroll
   const parentRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (sticky) {
       parentRef.current!.lastElementChild?.scrollIntoView();
     }
