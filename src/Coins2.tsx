@@ -18,14 +18,11 @@ import {useVirtual} from 'react-virtual';
 
 export function Coins() {
   const [active, setActive] = useState(false);
-  const [rows, setRows] = useState<CoinUpdate[]>(() => initialData);
 
   // listen to coin stream
   useEffect(() => {
     if (active) {
-      return streamCoinbase(function addRow(event) {
-        setRows((rows) => [...rows, event]);
-      });
+      return streamCoinbase(function addRow(event) {});
     }
     return () => {};
   }, [active]);
@@ -34,11 +31,6 @@ export function Coins() {
   const [search, setSearch] = useState('');
   const [sorted, setSorted] = useState(false);
   const [sticky, setSticky] = useState(false);
-
-  // apply filter / sort
-  let visibleRows = rows;
-  if (search) visibleRows = visibleRows.filter(filterCoinsBy(search));
-  if (sorted) visibleRows = visibleRows.sort(sortCoinsByPrice);
 
   // sticky scroll
   const parentRef = useRef<HTMLDivElement | null>(null);

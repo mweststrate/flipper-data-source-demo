@@ -19,9 +19,7 @@ import {useVirtual} from 'react-virtual';
 export function Coins() {
   const [active, setActive] = useState(false);
   const rows = useRef(initialData);
-  const [visibleRows, setVisibleRows] = useState<CoinUpdate[]>(
-    () => initialData,
-  );
+  const [visibleRows, setVisibleRows] = useState<CoinUpdate[]>(rows.current);
   const filter = useRef((_c: CoinUpdate) => true);
 
   // listen to coin stream
