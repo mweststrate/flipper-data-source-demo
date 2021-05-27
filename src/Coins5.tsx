@@ -45,7 +45,6 @@ export function Coins() {
             visibleRows.current.push(event);
           }
           if (index > window.current[0] && index <= window.current[1]) {
-            console.log('visible');
             forceUpdate((x) => x + 1);
           } else {
             if (visibleRows.current.length % 100 === 0) {

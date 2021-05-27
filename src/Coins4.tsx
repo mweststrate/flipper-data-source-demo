@@ -20,9 +20,7 @@ import {sortedLastIndexBy} from 'lodash';
 export function Coins() {
   const [active, setActive] = useState(false);
   const rows = useRef(initialData);
-  const [visibleRows, setVisibleRows] = useState<CoinUpdate[]>(
-    () => initialData,
-  );
+  const [visibleRows, setVisibleRows] = useState(rows.current);
   const filter = useRef((_c: CoinUpdate) => true);
   const sortBy = useRef<undefined | ((c: CoinUpdate) => number)>();
 
@@ -34,14 +32,14 @@ export function Coins() {
         if (filter.current(event)) {
           setVisibleRows((visibleRows) => {
             if (sortBy.current) {
-              const res = [...visibleRows];
+              const sortedRows = [...visibleRows];
               const index: number = sortedLastIndexBy(
                 visibleRows,
                 event,
                 sortBy.current,
               );
-              res.splice(index, 0, event);
-              return res;
+              sortedRows.splice(index, 0, event);
+              return sortedRows;
             }
             return [...visibleRows, event];
           });
