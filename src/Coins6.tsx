@@ -47,7 +47,7 @@ export function Coins() {
     <div>
       {/* prettier-ignore */}
       <Toolbar {...{active, setActive, search, setSearch, sorted, setSorted, sticky, setSticky, }} />
-      <div className="table">
+      <div className="table2">
         <DataSourceRendererVirtual
           dataSource={dataSource}
           useFixedRowHeight

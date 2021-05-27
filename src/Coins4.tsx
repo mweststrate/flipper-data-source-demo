@@ -33,7 +33,7 @@ export function Coins() {
           setVisibleRows((visibleRows) => {
             if (sortBy.current) {
               const sortedRows = [...visibleRows];
-              const index: number = sortedLastIndexBy(
+              const index = sortedLastIndexBy(
                 visibleRows,
                 event,
                 sortBy.current,

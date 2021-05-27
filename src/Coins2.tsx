@@ -18,7 +18,7 @@ import {useVirtual} from 'react-virtual';
 
 export function Coins() {
   const [active, setActive] = useState(false);
-  const [rows, setRows] = useState<CoinUpdate[]>(() => initialData);
+  const [rows, setRows] = useState(() => initialData);
 
   // listen to coin stream
   useEffect(() => {

@@ -8,7 +8,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-import {Coins} from './Coins5';
+import {Coins} from './Coins6';
 
 ReactDOM.render(
   <React.StrictMode>

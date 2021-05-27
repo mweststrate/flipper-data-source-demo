@@ -23,8 +23,8 @@ export function Coins() {
   const visibleRows = useRef(rows.current);
   const filter = useRef((_c: CoinUpdate) => true);
   const sortBy = useRef<undefined | ((c: CoinUpdate) => number)>();
-  const [, forceUpdate] = useState(0);
   const window = useRef([0, 50]);
+  const [, forceUpdate] = useState(0);
 
   // listen to coin stream
   useEffect(() => {
